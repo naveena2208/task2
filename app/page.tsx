@@ -3,6 +3,7 @@
 import { socket } from "./socket";
 import { useEffect } from "react";
 import FlightTable from "./components/flighttable/FlightTable";
+import Navbar from "./components/Navbar";
 
 export default function Home() {
   useEffect(() => {
@@ -10,7 +11,7 @@ export default function Home() {
   }, []);
   return (
     <div>
-      <h1>Flight Data Management</h1>
+      <Navbar />
       <FlightTable />
     </div>
   );

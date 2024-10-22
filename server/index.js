@@ -14,8 +14,6 @@ app.listen(8002, function (err) {
   }
 });
 
-app.use(bodyParser.urlencoded());
-
 app.use(bodyParser.json());
 
 // mongodb
@@ -41,17 +39,78 @@ const FlightData = mongoose.model("FlightData", {
   currentStatus: String,
 });
 
+const places = [
+  "Alabama",
+  "Alaska",
+  "American Samoa",
+  "Arizona",
+  "Washington",
+  "West Virginia",
+  "Wisconsin",
+  "Wyoming",
+  "Colorado",
+  "Connecticut",
+  "Delaware",
+  "District of Columbia",
+  "Federated States of Micronesia",
+  "Florida",
+  "Georgia",
+  "Guam",
+  "Hawaii",
+  "Idaho",
+  "Illinois",
+  "Indiana",
+  "Iowa",
+  "Kansas",
+  "Kentucky",
+  "Louisiana",
+  "Maine",
+  "Marshall Islands",
+  "Maryland",
+  "Massachusetts",
+  "Michigan",
+  "Minnesota",
+  "Mississippi",
+  "Missouri",
+  "Montana",
+  "Nebraska",
+  "Nevada",
+  "New Hampshire",
+  "New Jersey",
+];
+
+const getTodayDate = () => {
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  let mm = today.getMonth() + 1;
+  let dd = today.getDate();
+  if (dd < 10) dd = "0" + dd;
+  if (mm < 10) mm = "0" + mm;
+  return dd + "-" + mm + "-" + yyyy;
+};
+
+const generateRandom = (max) => {
+  return Math.floor(Math.random() * max + 1);
+};
+
 var myFunc = async function saveData() {
-  const flightIds = ["AIR1234", "VIS654", "IND45678", "SRILAN2345"];
-  let flights = flightIds.map(async (flight) => {
+  const flightIds = [
+    "AIR1234",
+    "VIS654",
+    "IND45678",
+    "SRILAN2345",
+    "VIS874",
+    "AIR983",
+  ];
+  flightIds.map(async (flight) => {
     let data = new FlightData({
       flightName: flight,
-      flightDate: "sdfsda",
-      origin: "sdfgsdg",
-      destination: "asdfsadf",
-      scheduledTime: "sdfsdf",
-      departureTime: "sdfsdsdf",
-      currentStatus: "arrived",
+      flightDate: getTodayDate(),
+      origin: places[generateRandom(places.length - 1)],
+      destination: places[generateRandom(places.length - 1)],
+      scheduledTime: "10:00:00",
+      departureTime: "12:00:00",
+      currentStatus: "ARRIVED",
     });
     await data.save();
   });
